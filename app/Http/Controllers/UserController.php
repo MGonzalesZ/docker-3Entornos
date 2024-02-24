@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\v1\MobileApp;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -9,22 +9,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\Controller;
 use App\Traits\ApiResponser;
-use App\Models\MobileApp\User;
+use App\Models\User;
 use Exception;
 
 class UserController extends Controller
 {
     use ApiResponser;
-
-    /**
-     * Return users list
-     * @return Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $users = User::all();
-        return $this->validResponse($users);
-    }
 
     /**
      * Create an instance of user
