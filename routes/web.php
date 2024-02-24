@@ -17,14 +17,21 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['middleware' => 'client.credentials', 'prefix' => 'v1'], function () use ($router) {
-    /**
-     * Users routes
-     */
-    $router->get('/users/exists', 'v1\MobileApp\UserController@exists');
-    $router->post('/users', 'v1\MobileApp\UserController@store');
-});
+$router->group(['prefix' => 'api'], function () use ($router) {
+    $router->group(['middleware' => 'client.credentials', 'prefix' => 'v1'], function () use ($router) {
+        /**
+         * Users routes
+         */
+        $router->get('/users/exists', 'v1\MobileApp\UserController@exists');
+        $router->post('/users', 'v1\MobileApp\UserController@store');
+    });
 
-$router->group(['middleware' => 'auth', 'prefix' => 'v1'], function () use ($router) {
-    
+    $router->group(['middleware' => 'auth', 'prefix' => 'v1'], function () use ($router) {
+        $router->get('/categories', ['uses' => 'CategoryController@index']);
+        $router->get('/categories/{id}', ['uses' => 'CategoryController@read']);
+        $router->post('/categories', ['uses' => 'CategoryController@create']);
+        $router->put('/categories/{id}', ['uses' => 'CategoryController@update']);
+        $router->patch('/categories/{id}', ['uses' => 'CategoryController@patch']);
+        $router->delete('/categories/{id}', ['uses' => 'CategoryController@delete']);
+    });
 });
