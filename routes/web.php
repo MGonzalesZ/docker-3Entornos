@@ -22,8 +22,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
         /**
          * Users routes
          */
-        $router->get('/users/exists', 'v1\MobileApp\UserController@exists');
-        $router->post('/users', 'v1\MobileApp\UserController@store');
+        $router->get('/users/exists', 'UserController@exists');
+        $router->post('/users', 'UserController@store');
     });
 
     $router->group(['middleware' => 'auth', 'prefix' => 'v1'], function () use ($router) {
