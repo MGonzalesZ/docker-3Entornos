@@ -16,3 +16,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+$router->group(['middleware' => 'client.credentials', 'prefix' => 'v1'], function () use ($router) {
+    /**
+     * Users routes
+     */
+    $router->get('/users/exists', 'v1\MobileApp\UserController@exists');
+    $router->post('/users', 'v1\MobileApp\UserController@store');
+});
+
+$router->group(['middleware' => 'auth', 'prefix' => 'v1'], function () use ($router) {
+    
+});
