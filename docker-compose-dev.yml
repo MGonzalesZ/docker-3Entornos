@@ -1,0 +1,47 @@
+services:
+    api-rest:
+        image: "newspaper/api-rest:dev"
+        build:
+            context: ./
+            dockerfile: Dockerfile-dev
+        container_name: newspaper-api-rest_dev
+        restart: unless-stopped
+        working_dir: /var/www/
+        volumes:
+            - ./:/var/www
+        networks:
+            - newspaper-network_dev
+
+    nginx:
+        image: nginx:1.25.5
+        container_name: newspaper-nginx_dev
+        restart: unless-stopped
+        ports:
+            - 8000:80
+        volumes:
+            - ./:/var/www
+            - ./docker-compose/nginx:/etc/nginx/conf.d/
+        networks:
+            - newspaper-network_dev
+
+    db:
+        image: postgres:16.2
+        container_name: newspaper-postgres_dev
+        restart: always
+        ports:
+            - "5433:5432"
+        volumes:
+            - dbdata_dev:/var/lib/postgresql/data
+        environment:
+            POSTGRES_DB: newspaper
+            POSTGRES_USER: dbadmin
+            POSTGRES_PASSWORD: password
+        networks:
+            - newspaper-network_dev
+
+networks:
+    newspaper-network_dev:
+        driver: bridge
+
+volumes:
+    dbdata_dev:
