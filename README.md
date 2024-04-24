@@ -22,3 +22,43 @@ If you discover a security vulnerability within Lumen, please send an e-mail to 
 ## License
 
 The Lumen framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Run Docker Compose in Dev
+
+```bash
+docker compose -f docker-compose-dev.yml up -d
+```
+
+## Run Docker Compose in Prod
+
+```bash
+docker compose up -d
+```
+
+## Testing in Dev
+
+Crear las tablas ejecutando migrate
+
+```bash
+docker exec newspaper-api-rest_dev php artisan migrate
+```
+
+Instalar passport para crear las credenciales para OAuth
+
+```bash
+docker exec newspaper-api-rest_dev php artisan passport:install
+```
+
+## Testing in Prod
+
+Crear las tablas ejecutando migrate
+
+```bash
+docker exec newspaper-api-rest_prod php artisan migrate
+```
+
+Instalar passport para crear las credenciales para OAuth
+
+```bash
+docker exec newspaper-api-rest_prod php artisan passport:install
+```
