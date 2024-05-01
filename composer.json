@@ -22,7 +22,7 @@
         }
     },
     "autoload-dev": {
-        "classmap": [
+        "exclude-from-classmap": [
             "tests/"
         ]
     },

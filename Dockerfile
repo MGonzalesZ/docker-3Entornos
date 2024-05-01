@@ -28,8 +28,11 @@ RUN useradd -G www-data,root -u 1000 -d /home/newspaper newspaper
 RUN mkdir -p /home/newspaper/.composer && \
     chown -R newspaper:newspaper /home/newspaper
 
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Set working directory
-COPY . /var/www
-RUN composer install -y
+WORKDIR /var/www/
+COPY . /var/www/
+RUN composer install
 
 USER newspaper

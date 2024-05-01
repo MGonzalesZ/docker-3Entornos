@@ -9,6 +9,7 @@ services:
         working_dir: /var/www/
         volumes:
             - ./:/var/www
+            - /var/www/vendor
         networks:
             - newspaper-network_dev
 

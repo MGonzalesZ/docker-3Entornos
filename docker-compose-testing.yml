@@ -1,48 +1,48 @@
 services:
     api-rest:
-        image: "newspaper/api-rest:prod"
+        image: "newspaper/api-rest:dev"
         build:
             context: ./
-            dockerfile: Dockerfile
-        container_name: newspaper-api-rest_prod
+            dockerfile: Dockerfile-testing
+        container_name: newspaper-api-rest_testing
         restart: unless-stopped
         working_dir: /var/www/
         volumes:
             - ./:/var/www
             - /var/www/vendor
         networks:
-            - newspaper-network_prod
+            - newspaper-network_testing
 
     nginx:
         image: nginx:1.25.5
-        container_name: newspaper-nginx_prod
+        container_name: newspaper-nginx_testing
         restart: unless-stopped
         ports:
-            - 8080:80
+            - 8001:80
         volumes:
             - ./:/var/www
             - ./docker-compose/nginx:/etc/nginx/conf.d/
         networks:
-            - newspaper-network_prod
+            - newspaper-network_testing
 
     db:
         image: postgres:16.2
-        container_name: newspaper-postgres_prod
+        container_name: newspaper-postgres_testing
         restart: always
         ports:
-            - "5432:5432"
+            - "5433:5432"
         volumes:
-            - dbdata_prod:/var/lib/postgresql/data
+            - dbdata_testing:/var/lib/postgresql/data
         environment:
             POSTGRES_DB: newspaper
             POSTGRES_USER: dbadmin
             POSTGRES_PASSWORD: password
         networks:
-            - newspaper-network_prod
+            - newspaper-network_testing
 
 networks:
-    newspaper-network_prod:
+    newspaper-network_testing:
         driver: bridge
 
 volumes:
-    dbdata_prod:
+    dbdata_testing:
